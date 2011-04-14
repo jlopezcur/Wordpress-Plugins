@@ -1,7 +1,23 @@
 <?php
+/*  Copyright 2011  Javier López Úbeda  (email : jlopez@s3server.net)
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as 
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
 /*
 Plugin Name: Flags 0.1.0
-Description: Plugin para Conservatorio de Almería
+Description: Use this plugin to mark one post as important (other flags can be developed in the future)
 Author: Javier López Úbeda
 Version: 0.1.0
 Author URI: http://www.s3server.net
@@ -67,3 +83,12 @@ class Flags {
 // Initiate the plugin
 add_action("init", "FlagsInit");
 function FlagsInit() { global $flags; $flags = new Flags(); }
+
+function is_post_important() {
+	global $query;
+	$cfk = get_post_custom_keys();
+	foreach ($cfk as $key) {
+		if (strtolower($key) == "important") return true;
+	}
+	return false;
+}
